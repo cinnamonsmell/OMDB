@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header class="rounded">
+      <h1>Кинопоиск</h1>
+      <nav class="darkBg">
+        <a href="#" class="active">Главная</a>
+        <a href="./favorites.html">Избранное</a>
+      </nav>
+      <img src="./img/themeChange.svg" alt="themeChange" id="themeChange" />
+    </header>
+
+    <div class="search rounded">
+      <input class="darkBg" type="text" name="search"/>
+      <button class="darkBg" id="searchBtn">Поиск</button>
+    </div>
+
+    <div class="loader rounded"></div>
+
+    <div class="main rounded">
+      <div class="movieTitle darkBg">Iron Man</div>
+      <div class="movie darkBg">
+        <div style="background-image: url(./img/film2.jpg)" alt="movieImg" id="movieImg">
+          <img class="favoriteIcon" src="./img/favBtn.svg"/>
+        </div>
+        <div class="movieDescription"></div>
+      </div>
+      <div class="movieTitle darkBg">Найдено похожих фильмов: 8</div>
+      <div class="simularMovie">
+        <div class="simularMovieCard">
+          <div class="simularMovieTitle">Iron Sky</div>
+        </div>
+        <div class="simularMovieCard">
+          <div class="simularMovieTitle">The Man in the Iron Mask</div>
+        </div>
+        <div class="simularMovieCard">
+          <div class="simularMovieTitle">3-IRON</div>
+        </div>
+        <div class="simularMovieCard">
+          <div class="simularMovieTitle">The Iron Lady</div>
+        </div>
+        <div class="simularMovieCard">
+          <div class="simularMovieTitle">n/a</div>
+        </div>
+        <div class="simularMovieCard">
+          <div class="simularMovieTitle">n/a</div>
+        </div>
+        <div class="simularMovieCard">
+          <div class="simularMovieTitle">n/a</div>
+        </div>
+        <div class="simularMovieCard">
+          <div class="simularMovieTitle">n/a</div>
+        </div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
