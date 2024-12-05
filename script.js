@@ -11,19 +11,26 @@ const searchBtn = document.getElementById("searchBtn");
 // Слушатели событий
 themeBtn.addEventListener("click", changeTheme);
 searchBtn.addEventListener("click", findMovie);
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+     findMovie()
+  }
+});
 
+// Смена темы
 function changeTheme() {
   const body = document.querySelector("body");
   body.classList.toggle("dark");
 }
 
+// Поиск фильма
 async function findMovie() {
   let search = document.querySelector('[name="search"]')?.value || '';
   
-  if (!search.trim()) {
-    alert("Введите название фильма!");
-    return;
-  }
+  // if (!search.trim()) {
+  //   alert("Введите название фильма!");
+  //   return;
+  // }
   
   let loader = document.getElementsByClassName("loader")[0];
   loader.style.display = "block";
@@ -40,6 +47,7 @@ async function findMovie() {
       movieTitle.innerHTML = `${result.Error}`;
     } else {
       showMovie(result);
+      findSimularMovies();
       console.log(result);
     }
   } catch (error) {
@@ -49,7 +57,7 @@ async function findMovie() {
   }
 }
 
-
+// Показать фильм
 function showMovie(movie) {
   main.style.display = "block";
   movieTitle.style.display = "block";
@@ -73,6 +81,43 @@ function showMovie(movie) {
             <span class="subtitle">${movie[key] || "N/A"}</span>
        </div>`;
   });
+}
+
+// Похожие фильмы
+async function findSimularMovies() {
+  const search = document.getElementsByName("search")[0].value;
+  const simularMovieTitle = document.getElementsByClassName("movieTitle")[1];
+  const data = { apikey: "1b7ff984", s: search };
+  const result = await sendRequest("http://www.omdbapi.com/", "GET", data);
+  console.log(result);
+  if (result.response == "False") {
+  } else {
+    simularMovieTitle.style.display = "block";
+    simularMovieTitle.innerHTML = `Найдено похожих фильмов: ${result.totalResults}`;
+    console.log(result.Search);
+    showSimularMovies(result.Search);
+  }
+}
+
+function showSimularMovies(movies) {
+  const simularMovies = document.getElementsByClassName("simularMovie")[0];
+  simularMovies.innerHTML = "";
+  simularMovies.style.display = "grid";
+  for (let i = 0; i < movies.length; i++) {
+    const movie = movies[i];
+    if(movie.Poster != "N/A"){
+      let simularMovie = `
+       <div class="simularMovieCard" style="background-image: url('${movie.Poster}');">
+                <div class="saved" onclick="addSaved()" 
+                data-imdbID="${movie.imdbID}" data-title="${movie.Title}" data-poster="${movie.Poster}">
+                </div>
+                <div class="simularMovieTitle"  > 
+                    ${movie.Title}
+                </div>
+            </div>`;
+      simularMovies.innerHTML+=simularMovie
+    }
+  }  
 }
 
 async function sendRequest(url, method, data) {
